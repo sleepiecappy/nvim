@@ -12,10 +12,15 @@ return { -- You can easily change to a different colorscheme.
 				comments = { italic = false }, -- Disable italics in comments
 			},
 		}
-
+		local cs = 'tokyonight-night'
 		-- Load the colorscheme here.
 		-- Like many other themes, this one has different styles, and you could load
 		-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-		vim.cmd.colorscheme 'tokyonight-night'
+		vim.cmd.colorscheme(cs)
+		vim.api.nvim_create_autocmd('BufEnter', {
+			callback = function()
+				vim.cmd.colorscheme(cs)
+			end
+		})
 	end,
 }
