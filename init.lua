@@ -1,5 +1,5 @@
-require('base.opts')
-require('base.keybinds')
+require('config.opts')
+require('config.keybinds')
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -21,7 +21,7 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  { import = 'self.plugins' },
+  { import = 'lazy.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
