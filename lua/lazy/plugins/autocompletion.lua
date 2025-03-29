@@ -91,9 +91,7 @@ return { -- Autocompletion
 						luasnip.jump(-1)
 					end
 				end, { 'i', 's' }),
-
-				["<Tab>"] = cmp.mapping(function(fallback)
-					-- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
+				["<CR>"] = cmp.mapping(function(fallback)
 					if luasnip.expand_or_locally_jumpable() then
 						luasnip.expand_or_jump()
 					elseif cmp.visible() then
@@ -101,7 +99,15 @@ return { -- Autocompletion
 						if not entry then
 							cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
 						end
-						cmp.confirm({select = true})
+						cmp.confirm({ select = true })
+					end
+				end, { 'i', 's' }),
+
+				["<Tab>"] = cmp.mapping(function(fallback)
+					if cmp.visible() then
+						cmp.select_next_item()
+					elseif luasnip.locally_jumpable(1) then
+						luasnip.jump(1)
 					else
 						fallback()
 					end

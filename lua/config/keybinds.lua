@@ -14,10 +14,6 @@ vim.api.nvim_set_keymap('n', '<leader>l', '$', { noremap = true, silent = true }
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('i', 'jj', '<ESC>')
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
@@ -30,3 +26,4 @@ vim.keymap.set('i', '<Tab>', function()
     return '<Tab>'
   end
 end, { expr = true, noremap = true })
+vim.keymap.set('n', '<leader><leader>', '<cmd>w<CR>', { desc = 'Save' })

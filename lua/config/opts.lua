@@ -26,7 +26,7 @@ vim.opt.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-	vim.opt.clipboard = 'unnamedplus'
+  vim.opt.clipboard = 'unnamedplus'
 end)
 
 -- Enable break indent
@@ -46,7 +46,7 @@ vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 600
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -58,7 +58,7 @@ vim.opt.splitbelow = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.fillchars = {
-	eob = " "
+  eob = ' ',
 }
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -80,3 +80,5 @@ vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.incsearch = true
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
