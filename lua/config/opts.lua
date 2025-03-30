@@ -82,3 +82,5 @@ vim.opt.backup = false
 vim.opt.incsearch = true
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.cmd("set termguicolors")
+vim.cmd("set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20")

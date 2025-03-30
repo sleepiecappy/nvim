@@ -100,6 +100,8 @@ return { -- Autocompletion
 							cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
 						end
 						cmp.confirm({ select = true })
+					else
+						fallback()
 					end
 				end, { 'i', 's' }),
 
