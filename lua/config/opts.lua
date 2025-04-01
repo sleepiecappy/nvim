@@ -76,11 +76,17 @@ vim.opt.confirm = true
 -- RC file
 vim.o.exrc = true
 vim.opt.smartindent = true
+vim.o.expandtab = true -- Use spaces instead of tabs
+vim.o.shiftwidth = 4 -- Number of spaces per indent
+vim.o.tabstop = 4 -- Tab character behaves as 4 spaces
+vim.o.softtabstop = 4 -- Backspace/delete treats tabs as spaces
+vim.o.smarttab = true -- Use shiftwidth when pressing <Tab> at the beginning of a line
+vim.o.autoindent = true -- Copy indentation from the previous line
 vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.incsearch = true
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.cmd("set termguicolors")
-vim.cmd("set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20")
+vim.cmd 'set termguicolors'
+vim.cmd 'set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
