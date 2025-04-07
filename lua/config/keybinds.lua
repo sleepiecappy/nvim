@@ -27,3 +27,4 @@ vim.keymap.set('i', '<Tab>', function()
   end
 end, { expr = true, noremap = true })
 vim.keymap.set('n', '<leader><leader>', '<cmd>w<CR>', { desc = 'Save' })
+vim.keymap.set('n', '<leader>bc', '<cmd>%bd|e#<CR>', { desc = 'Delete all buffers but last one' })

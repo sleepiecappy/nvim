@@ -1,5 +1,6 @@
-require('config.opts')
-require('config.keybinds')
+require 'config.opts'
+require 'config.keybinds'
+require 'config.autocmds'
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
