@@ -22,4 +22,11 @@ function M.MoveSelectionToNewFile()
   end
 end
 
+function M.setup()
+  vim.api.nvim_create_user_command('MoveSelectionToNewFile', M.MoveSelectionToNewFile, { desc = 'Move selected lines to a new file' })
+  vim.api.nvim_set_keymap('v', '<C-M-n>', '<cmd>MoveSelectionToNewFile<cr>', {
+    desc = 'Move selected lines to a new file',
+  })
+end
+
 return M
