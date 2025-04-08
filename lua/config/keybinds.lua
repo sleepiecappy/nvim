@@ -20,13 +20,13 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 vim.keymap.set('i', '<Tab>', function()
   local next_char = vim.fn.getline('.'):sub(vim.fn.col '.', vim.fn.col '.')
-  if next_char:match '[%)%]%}%\'%"]' then
+  if next_char:match '[%:%)%]%}%\'%"]' then
     return '<Right>'
   else
     return '<Tab>'
   end
 end, { expr = true, noremap = true })
-vim.keymap.set('n', '<leader><leader>', '<cmd>w<CR>', { desc = 'Save' })
+vim.keymap.set('n', '<leader>=', '<cmd>w<CR>', { desc = 'Save' })
 vim.keymap.set('n', '<leader>bc', '<cmd>%bd|e#<CR>', { desc = 'Delete all buffers but last one' })
 
 vim.keymap.set('n', '<leader>bd', '<cmd>bd<CR>', { desc = 'Delete buffer' })
