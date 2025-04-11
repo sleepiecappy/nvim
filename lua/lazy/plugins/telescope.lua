@@ -23,28 +23,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
-    -- Telescope is a fuzzy finder that comes with a lot of different things that
-    -- it can fuzzy find! It's more than just a "file finder", it can search
-    -- many different aspects of Neovim, your workspace, LSP, and more!
-    --
-    -- The easiest way to use Telescope, is to start by doing something like:
-    --  :Telescope help_tags
-    --
-    -- After running this command, a window will open up and you're able to
-    -- type in the prompt window. You'll see a list of `help_tags` options and
-    -- a corresponding preview of the help.
-    --
-    -- Two important keymaps to use while in Telescope are:
-    --  - Insert mode: <c-/>
-    --  - Normal mode: ?
-    --
-    -- This opens a window that shows you all of the keymaps for the current
-    -- Telescope picker. This is really useful to discover what Telescope can
-    -- do as well as how to actually do it!
-
-    -- [[ Configure Telescope ]]
-    -- See `:help telescope` and `:help telescope.setup()`
     local actions = require 'telescope.actions'
+    local builtin = require 'telescope.builtin'
+
     require('telescope').setup {
       -- You can put your default mappings / updates / etc. in here
       --  All the info you're looking for is in `:help telescope.setup()`
@@ -54,27 +35,137 @@ return { -- Fuzzy Finder (files, lsp, etc)
       --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
       --   },
       -- },
-      -- pickers = {}
+
       defaults = {
+        -- Optional: Customize layout, sorting, etc.
+        layout_strategy = 'vertical', -- Or 'horizontal', 'flex', etc.
+        layout_config = {
+          vertical = { prompt_position = 'top', preview_height = 0.4 },
+          -- horizontal = { preview_width = 0.6 }
+        },
+        sorting_strategy = 'ascending',
+        prompt_prefix = '    ', -- Nerd Font icon (optional)
+        selection_caret = '     ', -- Nerd Font icon (optional)
+
+        -- Keymappings within the Telescope window
         mappings = {
-          i = {
-            ['<ESC>'] = actions.close,
+          i = { -- Mappings for Insert mode in Telescope prompt
+            -- >> Picker Switching Logic <<
+            ['<C-f>'] = function(prompt_bufnr) -- Ctrl+F for Files
+              -- Close the current picker and open find_files
+              -- Using require inside ensures the latest builtin is used if reloaded
+              require('telescope.actions').close(prompt_bufnr)
+              require('telescope.builtin').find_files()
+            end,
+            ['<C-g>'] = function(prompt_bufnr) -- Ctrl+G for Grep (Text search)
+              require('telescope.actions').close(prompt_bufnr)
+              require('telescope.builtin').live_grep()
+            end,
+            ['<C-p>'] = function(prompt_bufnr) -- Ctrl+P for Project Symbols (LSP)
+              require('telescope.actions').close(prompt_bufnr)
+              require('telescope.builtin').lsp_workspace_symbols() -- Needs LSP!
+            end,
+            ['<C-d>'] = function(prompt_bufnr) -- Ctrl+D for Document Symbols (LSP)
+              require('telescope.actions').close(prompt_bufnr)
+              require('telescope.builtin').lsp_document_symbols() -- Needs LSP!
+            end,
+            ['<C-c>'] = function(prompt_bufnr) -- Ctrl+C for Commands
+              require('telescope.actions').close(prompt_bufnr)
+              require('telescope.builtin').commands()
+            end,
+            ['<C-h>'] = function(prompt_bufnr) -- Ctrl+H for Help Tags
+              require('telescope.actions').close(prompt_bufnr)
+              require('telescope.builtin').help_tags()
+            end,
+            ['<C-b>'] = function(prompt_bufnr) -- Ctrl+B for Buffers
+              require('telescope.actions').close(prompt_bufnr)
+              require('telescope.builtin').buffers()
+            end,
+            ['<C-o>'] = function(prompt_bufnr) -- Ctrl+O for Oldfiles (Recent)
+              require('telescope.actions').close(prompt_bufnr)
+              require('telescope.builtin').oldfiles()
+            end,
+            -- Add more pickers: keymaps, git_status, git_files, etc.
+            -- ["<C-k>"] = function(prompt_bufnr) require('telescope.actions').close(prompt_bufnr); require('telescope.builtin').keymaps() end,
+            -- ["<C-t>"] = function(prompt_bufnr) require('telescope.actions').close(prompt_bufnr); require('telescope.builtin').git_status() end,
+
+            -- Default Telescope actions (important!)
+            ['<esc>'] = actions.close,
+            ['<CR>'] = actions.select_default + actions.center, -- Open selection
+            ['<C-x>'] = actions.select_horizontal, -- Open in horizontal split
+            ['<C-v>'] = actions.select_vertical, -- Open in vertical split
+            ['<C-t>'] = actions.select_tab, -- Open in new tab
+            ['<C-j>'] = actions.move_selection_next, -- Move selection down
+            ['<C-k>'] = actions.move_selection_previous, -- Move selection up
+            ['<PageUp>'] = actions.preview_scrolling_up,
+            ['<PageDown>'] = actions.preview_scrolling_down,
+            -- Add other standard actions you use
+          },
+          n = { -- Mappings for Normal mode in Telescope results list
+            ['q'] = actions.close,
+            -- Add normal mode equivalents for switching if desired
+            ['<C-f>'] = function()
+              require('telescope.builtin').find_files()
+            end,
+            ['<C-g>'] = function()
+              require('telescope.builtin').live_grep()
+            end,
+            ['<C-p>'] = function()
+              require('telescope.builtin').lsp_workspace_symbols()
+            end,
+            ['<C-d>'] = function()
+              require('telescope.builtin').lsp_document_symbols()
+            end,
+            ['<C-c>'] = function()
+              require('telescope.builtin').commands()
+            end,
+            ['<C-h>'] = function()
+              require('telescope.builtin').help_tags()
+            end,
+            ['<C-b>'] = function()
+              require('telescope.builtin').buffers()
+            end,
+            ['<C-o>'] = function()
+              require('telescope.builtin').oldfiles()
+            end,
+            -- Keep default normal mode actions
+            ['<CR>'] = actions.select_default + actions.center,
+            ['<C-x>'] = actions.select_horizontal,
+            ['<C-v>'] = actions.select_vertical,
+            ['<C-t>'] = actions.select_tab,
+            ['j'] = actions.move_selection_next,
+            ['k'] = actions.move_selection_previous,
+            -- Add others as needed
           },
         },
       },
       extensions = {
+        -- Optional: Configure extensions like fzf-native or ui-select here
+        fzf = {
+          fuzzy = true, -- false will disable fuzzy matching
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true, -- override the file sorter
+          case_mode = 'smart_case', -- "smart_case", "ignore_case", "respect_case"
+        },
         ['ui-select'] = {
-          require('telescope.themes').get_dropdown(),
+          require('telescope.themes').get_dropdown {},
         },
       },
     }
 
-    -- Enable Telescope extensions if they are installed
+    -- Optional: Load fzf-native extension if installed
     pcall(require('telescope').load_extension, 'fzf')
-    pcall(require('telescope').load_extension, 'ui-select')
+    -- Optional: Load ui-select extension if installed
+    -- pcall(require('telescope').load_extension, 'ui-select')
 
+    -- >> The Main "Search Everywhere" Keybinding <<
+    -- Use a keybinding you prefer. <leader><space> is common.
+    -- This example starts with `find_files`. Change `builtin.find_files`
+    -- to `builtin.oldfiles` or `builtin.live_grep` etc. if you prefer a different default.
+    vim.keymap.set('n', '<leader><space>', function()
+      builtin.live_grep() -- Default picker to open
+    end, { noremap = true, silent = true, desc = 'Telescope Search Everywhere (Files)' })
     -- See `:help telescope.builtin`
-    local builtin = require 'telescope.builtin'
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
     vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })

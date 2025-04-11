@@ -14,6 +14,8 @@ return { -- You can easily change to a different colorscheme.
       no_bold = true,
       integrations = {
         neotree = true,
+        leap = true,
+        noice = true,
         harpoon = true,
         mini = {
           enabled = true,

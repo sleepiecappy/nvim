@@ -1,0 +1,97 @@
+*last-edit-location.txt* Plugin for navigating edit history
+
+==============================================================================
+CONTENTS                                       *last-edit-location-contents*
+
+1. Introduction......................|last-edit-location-introduction|
+2. Installation......................|last-edit-location-installation|
+3. Usage...............................|last-edit-location-usage|
+4. Configuration.....................|last-edit-location-configuration|
+5. Difference from Jumplist/Changelist.....|last-edit-location-diff|
+
+==============================================================================
+1. Introduction                          *last-edit-location-introduction*
+
+This plugin provides functionality similar to IntelliJ's "Last Edit Location"
+feature. It records the cursor position each time you modify text and allows
+you to navigate backward and forward through these specific edit points,
+potentially across different buffers.
+
+This differs from the built-in jumplist (|jumplist|) which tracks jumps (like
+`gd`, `gf`, `/<CR>`, etc.) and the changelist (|changelist|) which tracks all
+changes within a single buffer session.
+
+==============================================================================
+2. Installation                        *last-edit-location-installation*
+
+Use your preferred plugin manager.
+
+Using |packer.nvim|:
+>
+  use 'your-github-username/last-edit-location.nvim' -- Replace with actual path if hosted
+<
+Or add the Lua files manually to your `~/.config/nvim/lua/` directory.
+
+Make sure to call the setup function somewhere in your Neovim configuration:
+>
+  require('last-edit-location').setup({
+    -- Optional configuration overrides here
+  })
+<
+
+==============================================================================
+3. Usage                                     *last-edit-location-usage*
+
+Commands~
+  :LastEditPrev   Jump to the previous recorded edit location.
+  :LastEditNext   Jump to the next recorded edit location (after previously
+                  going back).
+
+Default Mappings~
+  g<              Mapped to |:LastEditPrev| by default.
+  g>              Mapped to |:LastEditNext| by default.
+
+Mappings can be disabled or changed via the configuration (|last-edit-location-configuration|).
+
+==============================================================================
+4. Configuration                       *last-edit-location-configuration*
+
+Call the `setup` function with a configuration table:
+>
+  require('last-edit-location').setup({
+    max_locations = 100, -- Max number of edit locations to store
+    map_prev = "g<",     -- Keymap for :LastEditPrev. Set to false to disable.
+    map_next = "g>",     -- Keymap for :LastEditNext. Set to false to disable.
+  })
+<
+
+Options~
+  max_locations~        (Number) Maximum number of distinct edit locations
+                        to keep in history. Defaults to 100.
+  map_prev~             (String|Boolean) Keymap to use for jumping to the
+                        previous location in normal mode. Set to `false` to
+                        disable the default mapping. Defaults to `"g<"`.
+  map_next~             (String|Boolean) Keymap to use for jumping to the
+                        next location in normal mode. Set to `false` to
+                        disable the default mapping. Defaults to `"g>"`.
+
+==============================================================================
+5. Difference from Jumplist/Changelist        *last-edit-location-diff*
+
+Jumplist (`<C-o>`, `<C-i>`)~
+  Tracks cursor movements considered "jumps", like opening files, `gd`, `gf`,
+  tag jumps, search commands (`/`, `?`, `n`, `N`), etc. It doesn't specifically
+  track *edits*.
+
+Changelist (`g;`, `g,`)~
+  Tracks the location of *every* change within the *current buffer* since it
+  was loaded. It doesn't track locations across different buffers in the same
+  chronological sequence, and it includes every minor change.
+
+Last Edit Location (This Plugin)~
+  Tracks the specific locations where text was last modified, attempting to
+  debounce minor consecutive changes on the same line. It stores locations
+  across buffers in a single chronological list, allowing navigation through
+  your recent *points of modification*.
+
+vim:tw=78:ts=8:sw=4:sts=4:et:ft=help:norl:
