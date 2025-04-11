@@ -152,9 +152,9 @@ function M.vcs()
   if not git_info or git_info.head == '' then
     return ''
   end
-  local added = git_info.added and ('%#GitSignsAdd#' .. git_info.added .. ' ') or ''
-  local changed = git_info.changed and ('%#GitSignsChange#' .. git_info.changed .. ' ') or ''
-  local removed = git_info.removed and ('%#GitSignsDelete#' .. git_info.removed .. ' ') or ''
+  local added = git_info.added and ('%#GitSignsAdd# ' .. git_info.added .. ' ') or ''
+  local changed = git_info.changed and ('%#GitSignsChange# ' .. git_info.changed .. ' ') or ''
+  local removed = git_info.removed and ('%#GitSignsDelete# ' .. git_info.removed .. ' ') or ''
   if git_info.added == 0 then
     added = ''
   end
