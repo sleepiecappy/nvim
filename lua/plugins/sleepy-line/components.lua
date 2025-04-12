@@ -87,7 +87,7 @@ function M.filename()
   if fname == '' then
     return ''
   end
-  return '  ' .. fname .. ' '
+  return '   ' .. fname .. ' '
 end
 
 function M.filetype()
@@ -125,16 +125,16 @@ function M.lsp()
   local info = ''
 
   if count['errors'] ~= 0 then
-    errors = ' %#LspDiagnosticsSignError# ' .. count['errors']
+    errors = ' %#LspDiagnosticsSignError#  ' .. count['errors']
   end
   if count['warnings'] ~= 0 then
-    warnings = ' %#LspDiagnosticsSignWarning# ' .. count['warnings']
+    warnings = ' %#LspDiagnosticsSignWarning#  ' .. count['warnings']
   end
   if count['hints'] ~= 0 then
-    hints = ' %#LspDiagnosticsSignHint# ' .. count['hints']
+    hints = ' %#LspDiagnosticsSignHint#  ' .. count['hints']
   end
   if count['info'] ~= 0 then
-    info = ' %#LspDiagnosticsSignInformation# ' .. count['info']
+    info = ' %#LspDiagnosticsSignInformation#  ' .. count['info']
   end
 
   return errors .. warnings .. hints .. info .. '%#Normal#'
@@ -152,9 +152,9 @@ function M.vcs()
   if not git_info or git_info.head == '' then
     return ''
   end
-  local added = git_info.added and ('%#GitSignsAdd# ' .. git_info.added .. ' ') or ''
-  local changed = git_info.changed and ('%#GitSignsChange# ' .. git_info.changed .. ' ') or ''
-  local removed = git_info.removed and ('%#GitSignsDelete# ' .. git_info.removed .. ' ') or ''
+  local added = git_info.added and ('%#GitSignsAdd#  ' .. git_info.added .. ' ') or ''
+  local changed = git_info.changed and ('%#GitSignsChange#  ' .. git_info.changed .. ' ') or ''
+  local removed = git_info.removed and ('%#GitSignsDelete#  ' .. git_info.removed .. ' ') or ''
   if git_info.added == 0 then
     added = ''
   end

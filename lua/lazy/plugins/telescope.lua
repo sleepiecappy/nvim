@@ -38,14 +38,14 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
       defaults = {
         -- Optional: Customize layout, sorting, etc.
-        layout_strategy = 'vertical', -- Or 'horizontal', 'flex', etc.
+        layout_strategy = 'flex', -- Or 'horizontal', 'flex', etc.
         layout_config = {
           vertical = { prompt_position = 'top', preview_height = 0.4 },
           -- horizontal = { preview_width = 0.6 }
         },
         sorting_strategy = 'ascending',
-        prompt_prefix = '    ', -- Nerd Font icon (optional)
-        selection_caret = '     ', -- Nerd Font icon (optional)
+        prompt_prefix = '  󰈳  ', -- Nerd Font icon (optional)
+        selection_caret = '  󰅂 ', -- Nerd Font icon (optional)
 
         -- Keymappings within the Telescope window
         mappings = {

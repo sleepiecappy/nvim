@@ -21,25 +21,9 @@ return { -- You can easily change to a different colorscheme.
           enabled = true,
         },
       },
-      color_overrides = {
-        mocha = {
-          text = '#F4CDE9',
-          subtext1 = '#DEBAD4',
-          subtext0 = '#C8A6BE',
-          overlay2 = '#B293A8',
-          overlay1 = '#9C7F92',
-          overlay0 = '#866C7D',
-          surface2 = '#705867',
-          surface1 = '#5A4551',
-          surface0 = '#44313B',
-
-          base = '#352939',
-          mantle = '#211924',
-          crust = '#1a1016',
-        },
-      },
     }
     local cs = 'catppuccin-mocha'
+    local colors = require('catppuccin.palettes').get_palette 'mocha'
     -- Load the colorscheme here.
     -- Like many other themes, this one has different styles, and you could load
     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
@@ -48,6 +32,7 @@ return { -- You can easily change to a different colorscheme.
       callback = function()
         vim.cmd.colorscheme(cs)
         vim.cmd 'highlight CursorLine guibg=NONE guifg=NONE'
+        vim.cmd('highlight NotifyBackground guibg=' .. colors.mantle)
       end,
     })
   end,
