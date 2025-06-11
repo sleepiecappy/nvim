@@ -31,7 +31,7 @@ return { -- You can easily change to a different colorscheme.
     vim.api.nvim_create_autocmd('BufEnter', {
       callback = function()
         vim.cmd.colorscheme(cs)
-        vim.cmd 'highlight CursorLine guibg=NONE guifg=NONE'
+        --        vim.cmd 'highlight CursorLine guibg=NONE guifg=NONE'
         vim.cmd('highlight NotifyBackground guibg=' .. colors.mantle)
       end,
     })

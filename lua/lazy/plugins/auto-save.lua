@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   dir = vim.fn.stdpath 'config' .. '/lua/plugins/auto-save',
   name = 'auto-save',
   config = function()
