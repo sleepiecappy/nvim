@@ -87,7 +87,7 @@ function M.filename()
   if fname == '' then
     return ''
   end
-  return '   ' .. fname .. ' '
+  return M.is_dirty() .. fname .. ' '
 end
 
 function M.filetype()
@@ -104,6 +104,14 @@ function M.fileencoding()
     return ''
   end
   return string.format(' %s ', fenc):upper()
+end
+
+function M.is_dirty()
+  local is_modified = vim.bo.modified
+  if is_modified then
+    return ' %#Normal#󰩌 '
+  end
+  return ' %#Normal# '
 end
 
 function M.lsp()

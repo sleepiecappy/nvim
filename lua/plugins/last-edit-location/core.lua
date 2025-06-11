@@ -74,11 +74,10 @@ function M.jump(direction)
       found_valid = true
       break
     else
-      -- Skip invalid location (e.g., buffer closed)
-      vim.notify(
-        string.format('LastEditLocation: Skipping invalid location at index %d (Buffer %d)', target_index, M.locations[target_index].buf),
-        vim.log.levels.DEBUG
-      )
+
+      --   string.format('LastEditLocation: Skipping invalid location at index %d (Buffer %d)', target_index, M.locations[target_index].buf),
+      --   vim.log.levels.DEBUG
+      -- )
       target_index = target_index + direction -- Continue searching in the same direction
     end
   end

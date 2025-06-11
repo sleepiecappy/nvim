@@ -9,11 +9,12 @@
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
+  enabled = false,
   -- NOTE: And you can specify dependencies as well
   dependencies = {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
-
+    'theHamsta/nvim-dap-virtual-text',
     -- Required dependency for nvim-dap-ui
     'nvim-neotest/nvim-nio',
 
@@ -22,7 +23,6 @@ return {
     'jay-babu/mason-nvim-dap.nvim',
 
     -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -80,6 +80,9 @@ return {
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
+    local dap_virtual_text = require 'nvim-dap-virtual-text'
+
+    dap_virtual_text.setup {}
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
@@ -94,7 +97,6 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
       },
     }
 
@@ -135,14 +137,79 @@ return {
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-    -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
+    -- Example language-specific configurations (replace with your needs)
+    -- Python (requires nvim-dap-python)
+    dap.configurations.python = {
+      {
+        name = 'Launch Current File',
+        type = 'python',
+        request = 'launch',
+        program = '${file}',
+        cwd = '${workspaceFolder}',
+        console = 'integratedTerminal',
+        justMyCode = false, -- Set to true for better performance in most cases
       },
     }
+
+    -- Example using node directly (you might prefer "chrome" or "pwa-node")
+    dap.configurations.javascript = {
+      {
+        name = 'Launch Node',
+        type = 'node',
+        request = 'launch',
+        program = '${file}',
+        cwd = '${workspaceFolder}',
+      },
+    }
+
+    local function is_dart_dir()
+      local l = vim.fn.getcwd() .. '/pubspec.yaml'
+      return vim.fn.filereadable(l) == 1
+    end
+
+    -- Function to get the Flutter SDK path using fvm
+    local function get_fvm_flutter_sdk_path()
+      local path = vim.fn.getcwd() .. '/.fvm/flutter_sdk'
+      if vim.fn.isdirectory(path) == 1 then
+        return path
+      else
+        require('notify').notify('No fvm flutter_sdk found. Please run `fvm use` in your project directory.', 'error', { title = 'FVM Flutter SDK Not Found' })
+        return nil
+      end
+    end
+
+    if is_dart_dir() then
+      -- Configure DAP for Dart using fvm
+      dap.configurations.dart = {
+        {
+          name = 'Launch Dart Program',
+          type = 'dart',
+          request = 'launch',
+          program = '${file}',
+          cwd = '${workspaceFolder}',
+          args = {},
+          dartSdkPath = get_fvm_flutter_sdk_path() .. '/bin/cache/dart-sdk',
+        },
+      }
+      -- Configure DAP for Dart using fvm
+      dap.adapters.dart = {
+        type = 'executable',
+        command = get_fvm_flutter_sdk_path() .. '/bin/cache/dart-sdk/bin/dart',
+        args = { 'debug_adapter' },
+        options = {
+          detached = false,
+        },
+      }
+
+      dap.adapters.flutter = {
+        type = 'executable',
+        command = get_fvm_flutter_sdk_path() .. '/bin/flutter',
+        args = { 'debug_adapter' },
+        options = {
+          detached = false,
+        },
+      }
+    end
+    -- Install golang specific config
   end,
 }

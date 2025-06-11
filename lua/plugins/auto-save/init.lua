@@ -1,7 +1,5 @@
 local M = {}
 
-local noice = require 'noice'
-
 local function is_available(name)
   return package.loaded[name] ~= nil or vim.fn.require(name, { silent = true }) ~= nil
 end
@@ -19,7 +17,6 @@ local config = {
   auto_enable_in_insert_mode = false,
 }
 
-local timer = nil
 local saving = false
 
 -- Function to save the current buffer
@@ -39,7 +36,6 @@ local function save_buffer()
   end
 
   local modifiable = vim.api.nvim_get_option_value('modifiable', { buf = buf })
-  local readonly = vim.api.nvim_get_option_value('readonly ', { buf = buf })
   local buftype = vim.api.nvim_get_option_value('buftype', { buf = buf })
   local filetype = vim.api.nvim_get_option_value('filetype', { buf = buf })
   local is_empty = #vim.api.nvim_buf_get_lines(buf, 0, -1, false) == 0
@@ -83,18 +79,10 @@ local function save_buffer()
   saving = false
 end
 
--- Function to handle buffer changes
-local function on_buf_changed()
-  if timer then
-    vim.timer.stop(timer)
-  end
-  timer = vim.timer.start(config.debounce_delay_ms, save_buffer)
-end
-
 -- Function to enable autosave
 function M.enable()
   config.enabled = true
-  noice.notify('Autosave enabled', vim.log.levels.INFO)
+  vim.notify('Autosave enabled', vim.log.levels.INFO)
 end
 
 -- Function to disable autosave
@@ -103,7 +91,7 @@ function M.disable()
   if timer then
     vim.timer.stop(timer)
   end
-  noice.notify('Autosave disabled', vim.log.levels.INFO)
+  vim.notify('Autosave disabled', vim.log.levels.INFO)
 end
 
 -- Function to toggle autosave
@@ -128,7 +116,7 @@ function M.setup(options)
   -- Setup autocommands.  Use a loop to create them.
   for _, event in ipairs(config.events) do
     vim.api.nvim_create_autocmd(event, {
-      callback = on_buf_changed,
+      callback = save_buffer,
       group = vim.api.nvim_create_augroup('nvim-autosave', { clear = true }),
     })
   end
