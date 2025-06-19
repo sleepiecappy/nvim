@@ -79,7 +79,7 @@ function M.filepath()
     return ' '
   end
 
-  return string.format('   %%<%s', fpath)
+  return string.format('  %%<%s', fpath)
 end
 
 function M.filename()
@@ -109,9 +109,9 @@ end
 function M.is_dirty()
   local is_modified = vim.bo.modified
   if is_modified then
-    return ' %#Normal#󰩌 '
+    return ' %#Normal# '
   end
-  return ' %#Normal# '
+  return ' %#Normal#'
 end
 
 function M.lsp()
