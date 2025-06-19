@@ -16,6 +16,6 @@ vim.api.nvim_create_autocmd('DirChanged', {
 vim.api.nvim_create_autocmd('VimEnter', {
   pattern = '*',
   callback = function()
-    vim.schedule(set_title)
+    vim.cmd 'SetTitle'
   end,
 })
