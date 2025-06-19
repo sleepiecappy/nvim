@@ -15,5 +15,4 @@ function M.setup()
    ]]
   end, { desc = 'Stop profiling and open log file' })
 end
-
 return M
