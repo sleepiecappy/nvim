@@ -10,8 +10,8 @@ return { -- You can easily change to a different colorscheme.
     require('catppuccin').setup {
       transparent_background = true,
       term_colors = true,
-      no_italics = true,
-      no_bold = true,
+      no_italics = false,
+      no_bold = false,
       integrations = {
         neotree = true,
         leap = true,
