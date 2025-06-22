@@ -13,6 +13,7 @@ return {
         })
       end,
     },
+    prompt_library = require 'prompt_library',
     extensions = {
       mcphub = {
         callback = 'mcphub.extensions.codecompanion',
@@ -63,7 +64,7 @@ return {
       },
       keys = {
         {
-          '<C-Enter>',
+          '<C-l>',
           function()
             require('copilot.suggestion').accept()
           end,
@@ -71,7 +72,7 @@ return {
           desc = 'Accept Copilot suggestion',
         },
         {
-          '<C-S-Enter>',
+          '<C-S-l>',
           function()
             require('copilot.suggestion').accept_word()
           end,
