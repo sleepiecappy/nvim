@@ -22,24 +22,25 @@ local modes = {
   ['!'] = 'SHELL',
   ['t'] = 'TERMINAL',
 }
-local color = require('catppuccin.palettes').get_palette 'mocha'
+local color = require 'rose-pine.palette'
+-- require('catppuccin.palettes').get_palette 'mocha'
 local colors = {
-  ['StatusLineAccent'] = color.pink,
-  ['StatuslineInsertAccent'] = color.green,
-  ['StatuslineVisualAccent'] = color.blue,
-  ['StatuslineReplaceAccent'] = color.maroon,
-  ['StatuslineCmdLineAccent'] = color.lavender,
-  ['StatuslineTerminalAccent'] = color.mauve,
-  ['StatusLineExtra'] = color.blue,
+  ['StatusLineAccent'] = color.love,
+  ['StatuslineInsertAccent'] = color.leaf,
+  ['StatuslineVisualAccent'] = color.iris,
+  ['StatuslineReplaceAccent'] = color.pine,
+  ['StatuslineCmdLineAccent'] = color.gold,
+  ['StatuslineTerminalAccent'] = color.foam,
+  ['StatusLineExtra'] = color.iris,
   ['StatusLine'] = 'NONE',
   ['Normal'] = 'NONE',
-  ['LspDiagnosticsSignError'] = color.red,
-  ['LspDiagnosticsSignWarning'] = color.yellow,
-  ['LspDiagnosticsSignHint'] = color.green,
-  ['LspDiagnosticsSignInformation'] = color.blue,
-  ['GitSignsAdd'] = color.green,
-  ['GitSignsChange'] = color.yellow,
-  ['GitSignsDelete'] = color.red,
+  ['LspDiagnosticsSignError'] = color.rose,
+  ['LspDiagnosticsSignWarning'] = color.gold,
+  ['LspDiagnosticsSignHint'] = color.leaf,
+  ['LspDiagnosticsSignInformation'] = color.iris,
+  ['GitSignsAdd'] = color.leaf,
+  ['GitSignsChange'] = color.gold,
+  ['GitSignsDelete'] = color.rose,
 }
 
 function M.get_mode()
