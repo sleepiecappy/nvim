@@ -1,10 +1,5 @@
 local M = {}
 
-local function is_available(name)
-  return package.loaded[name] ~= nil or vim.fn.require(name, { silent = true }) ~= nil
-end
-
--- Default configuration
 local config = {
   enabled = true,
   execution_context = 'Normal', -- "Vim" or "Normal"
@@ -18,6 +13,7 @@ local config = {
 }
 
 local saving = false
+local timer = nil
 
 -- Function to save the current buffer
 local function save_buffer()
@@ -25,6 +21,24 @@ local function save_buffer()
     return
   end
 
+  -- Cancel any pending save
+  if timer then
+    timer:stop()
+  end
+
+  -- Create a debounced save
+  if config.debounce_delay_ms > 0 then
+    timer = vim.defer_fn(function()
+      do_save()
+    end, config.debounce_delay_ms)
+    return
+  end
+
+  do_save()
+end
+
+-- Actual save implementation
+local function do_save()
   local buf = vim.api.nvim_get_current_buf()
   if buf == 0 then
     return
@@ -39,6 +53,7 @@ local function save_buffer()
   local buftype = vim.api.nvim_get_option_value('buftype', { buf = buf })
   local filetype = vim.api.nvim_get_option_value('filetype', { buf = buf })
   local is_empty = #vim.api.nvim_buf_get_lines(buf, 0, -1, false) == 0
+  local readonly = vim.api.nvim_get_option_value('readonly', { buf = buf })
 
   -- Check if autosave is enabled
   if not config.enabled then
@@ -75,6 +90,7 @@ local function save_buffer()
       config.callback()
     end
   else
+    vim.notify('Failed to save: ' .. tostring(err), vim.log.levels.ERROR)
   end
   saving = false
 end
@@ -85,23 +101,25 @@ function M.enable()
   vim.notify('Autosave enabled', vim.log.levels.INFO)
 end
 
--- Function to disable autosave
 function M.disable()
   config.enabled = false
   if timer then
-    vim.timer.stop(timer)
+    timer:stop()
+    timer = nil
   end
   vim.notify('Autosave disabled', vim.log.levels.INFO)
 end
 
--- Function to toggle autosave
 function M.toggle()
   config.enabled = not config.enabled
-  if config.enabled then
-    M.enable()
-  else
-    M.disable()
+
+  -- Handle timer if disabling
+  if not config.enabled and timer then
+    timer:stop()
+    timer = nil
   end
+
+  vim.notify('Autosave ' .. (config.enabled and 'enabled' or 'disabled'), vim.log.levels.INFO)
 end
 
 -- Setup function
@@ -124,11 +142,11 @@ function M.setup(options)
   if config.auto_enable_in_insert_mode then
     vim.api.nvim_create_autocmd('InsertEnter', {
       callback = M.enable,
-      group = vim.api.nvim_create_augroup('nvim-autosave-insert', { clear = true }),
+      group = vim.api.nvim_create_augroup('nvim-autosave-insert-enter', { clear = true }),
     })
     vim.api.nvim_create_autocmd('InsertLeave', {
       callback = M.disable,
-      group = vim.api.nvim_create_augroup('nvim-autosave-insert', { clear = true }),
+      group = vim.api.nvim_create_augroup('nvim-autosave-insert-leave', { clear = true }),
     })
   end
 end
