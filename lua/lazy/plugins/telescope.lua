@@ -7,6 +7,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     { -- If encountering errors, see telescope-fzf-native README for installation instructions
       'nvim-telescope/telescope-fzf-native.nvim',
 
+      -- Telescope buffer history extension to track most recently used buffers
       -- `build` is used to run some command when the plugin is installed/updated.
       -- This is only run then, not every time Neovim starts up.
       build = 'make',
@@ -79,7 +80,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
             end,
             ['<C-b>'] = function(prompt_bufnr) -- Ctrl+B for Buffers
               require('telescope.actions').close(prompt_bufnr)
-              require('telescope.builtin').buffers()
+              require('telescope').buffers()
             end,
             ['<C-o>'] = function(prompt_bufnr) -- Ctrl+O for Oldfiles (Recent)
               require('telescope.actions').close(prompt_bufnr)
@@ -176,7 +177,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>fR', builtin.registers, { desc = '[F]ind [R]egisters' })
     vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
     vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
-    vim.keymap.set('n', '<leader>bb', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<leader>bb', builtin.buffers, { desc = '[ ] Find buffers by MRU order' })
+    vim.keymap.set('n', '<leader>br', builtin.buffers, { desc = '[B]uffer [R]ecent (MRU order)' })
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()
@@ -200,5 +202,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- vim.keymap.set('n', '<leader>fn', function()
     -- 	builtin.find_files { cwd = vim.fn.stdpath 'config' }
     -- end, { desc = '[S]earch [N]eovim files' })
+    --
   end,
 }
