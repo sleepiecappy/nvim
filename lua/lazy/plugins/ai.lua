@@ -13,6 +13,14 @@ return {
         })
       end,
     },
+    strategies = {
+      chat = {
+        adapter = 'copilot',
+      },
+      inline = {
+        adapter = 'copilot',
+      },
+    },
     prompt_library = require 'prompt_library',
     extensions = {
       mcphub = {
