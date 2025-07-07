@@ -1,4 +1,5 @@
-vim.api.nvim_create_user_command('SetTitle', function()
+local usercmd = vim.api.nvim_create_user_command
+usercmd('SetTitle', function()
   local cwd = vim.fn.getcwd()
   if not cwd then
     -- vim.notify('Could not get current working directory.', vim.log.levels.ERROR)
@@ -30,3 +31,8 @@ vim.api.nvim_create_user_command('SetTitle', function()
     end
   end)
 end, { desc = 'Set wezterm tab title' })
+
+usercmd('Time', function()
+  local time = os.date '%Y-%m-%d %H:%M:%S'
+  print('⏰ ' .. time)
+end, { desc = 'Display current time' })
