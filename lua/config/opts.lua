@@ -95,7 +95,7 @@ vim.g.ai_model = 'claude-3.7-sonnet'
 -- set default shell to powershellcore
 if vim.fn.has 'win32' == 1 then
   vim.opt.shell = 'pwsh'
-  vim.opt.shellcmdflag = '-Command'
+  vim.opt.shellcmdflag = '-nologo -Command'
   vim.opt.shellquote = ''
   vim.opt.shellxquote = ''
   vim.opt.shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
