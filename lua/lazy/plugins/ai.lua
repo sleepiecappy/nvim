@@ -16,6 +16,7 @@ return {
     strategies = {
       chat = {
         adapter = 'copilot',
+        slash_commands = require 'slash_commands',
       },
       inline = {
         adapter = 'copilot',

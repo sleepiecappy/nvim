@@ -26,10 +26,10 @@ return {
     {
       role = 'user',
       content = [[
-Please review the code I provide in #buffer
+Please review the code I provide in #{buffer}
 
 - Provide concise feedback on the code quality, security, potential issues, edge cases, and improvements.
-- Apply the improvements to the code using @insert_edit_into_file
+- Apply the improvements to the code using @{insert_edit_into_file}
 ]],
       opts = {
         auto_submit = true,

@@ -1,1 +1,7 @@
-return { "gen740/SmoothCursor.nvim", config = function() require("smoothcursor").setup() end }
+return {
+  'gen740/SmoothCursor.nvim',
+  enable = false,
+  config = function()
+    require('smoothcursor').setup {}
+  end,
+}

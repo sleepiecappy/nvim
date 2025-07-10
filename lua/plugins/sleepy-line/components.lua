@@ -22,26 +22,27 @@ local modes = {
   ['!'] = 'SHELL',
   ['t'] = 'TERMINAL',
 }
-local color = require 'rose-pine.palette'
--- require('catppuccin.palettes').get_palette 'mocha'
-local colors = {
-  ['StatusLineAccent'] = color.love,
-  ['StatuslineInsertAccent'] = color.leaf,
-  ['StatuslineVisualAccent'] = color.iris,
-  ['StatuslineReplaceAccent'] = color.pine,
-  ['StatuslineCmdLineAccent'] = color.gold,
-  ['StatuslineTerminalAccent'] = color.foam,
-  ['StatusLineExtra'] = color.iris,
-  ['StatusLine'] = 'NONE',
-  ['Normal'] = 'NONE',
-  ['LspDiagnosticsSignError'] = color.rose,
-  ['LspDiagnosticsSignWarning'] = color.gold,
-  ['LspDiagnosticsSignHint'] = color.leaf,
-  ['LspDiagnosticsSignInformation'] = color.iris,
-  ['GitSignsAdd'] = color.leaf,
-  ['GitSignsChange'] = color.gold,
-  ['GitSignsDelete'] = color.rose,
-}
+-- local color = require 'rose-pine.palette'
+-- -- require('catppuccin.palettes').get_palette 'mocha'
+-- local colors = {
+--   ['StatusLineAccent'] = color.love,
+--   ['StatuslineInsertAccent'] = color.leaf,
+--   ['StatuslineVisualAccent'] = color.iris,
+--   ['StatuslineReplaceAccent'] = color.pine,
+--   ['StatuslineCmdLineAccent'] = color.gold,
+--   ['StatuslineTerminalAccent'] = color.foam,
+--   ['StatusLineExtra'] = color.iris,
+--   ['StatusLine'] = 'NONE',
+--   ['Normal'] = 'NONE',
+--   ['LspDiagnosticsSignError'] = color.rose,
+--   ['LspDiagnosticsSignWarning'] = color.gold,
+--   ['LspDiagnosticsSignHint'] = color.leaf,
+--   ['LspDiagnosticsSignInformation'] = color.iris,
+--   ['GitSignsAdd'] = color.leaf,
+--   ['GitSignsChange'] = color.gold,
+--   ['GitSignsDelete'] = color.rose,
+-- }
+local colors = {}
 
 function M.get_mode()
   local mode = vim.api.nvim_get_mode().mode

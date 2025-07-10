@@ -25,7 +25,38 @@ return {
     view = {
       width = 30,
       side = 'right',
-      signcolumn = 'yes',
+      signcolumn = 'no',
+    },
+    renderer = {
+      group_empty = true,
+      icons = {
+        show = {
+          file = false,
+          folder = false,
+          folder_arrow = true,
+          git = false,
+          modified = false,
+        },
+      },
+    },
+    filesystem_watchers = {
+      enable = true,
+      debounce_delay = 50,
+      ignore_dirs = {
+        '/.git',
+        '/node_modules',
+        '/.cache',
+        '/build',
+        '/dist',
+        '/vendor',
+        '/.next',
+        '/.nuxt',
+        '/.vscode',
+        '/.idea',
+        '/.sass-cache',
+        '/target',
+        '/out',
+      },
     },
   },
   keys = {

@@ -1,5 +1,5 @@
-return {
-  -- Main LSP Configuration
+return
+ {  -- Main LSP Configuration
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for Neovim
@@ -10,16 +10,14 @@ return {
       'nvim-java/nvim-java',
       lazy = true,
       name = 'java',
+      version = '*',
       opts = {
-        java_debug_adapter = {
-          enable = false,
-        },
         lombok = {
           version = '1.18.28',
         },
-        notifications = {
-          dap = false,
-        },
+        jdtls = {
+          version = '1.46.1',
+        }
       },
     },
     { 'williamboman/mason.nvim', opts = {} },

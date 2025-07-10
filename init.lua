@@ -8,10 +8,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
-require 'config.opts'
-require 'config.keybinds'
-require 'config.autocmds'
-require 'config.cmd'
+pcall(require, 'config.opts')
+pcall(require, 'config.keybinds')
+pcall(require, 'config.autocmds')
+pcall(require, 'config.cmd')
+pcall(require, 'config.abbrv')
 
 require('lazy').setup({
   { import = 'lazy.plugins' },
